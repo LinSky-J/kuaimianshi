@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mianshiya?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  jackson:
+    time-zone: Asia/Shanghai
+
+# MyBatis 配置
+mybatis:
+  configuration:
+    # 开启下划线转驼峰映射，例如 user_account -> userAccount
+    map-underscore-to-camel-case: true
+  # 实体所在包，便于使用别名（可选）
+  type-aliases-package: com.jinlin.kuaimianshibackend.model.entity

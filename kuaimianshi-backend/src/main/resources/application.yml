@@ -1,19 +1,36 @@
-server:
-  port: 8080
-
 spring:
+  application:
+    name: kuaimianshi-backend
+  profiles:
+    active: dev
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  session:
+    timeout: 259200
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mianshiya?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/mianshiya
     username: root
-    password: 123456
-  jackson:
-    time-zone: Asia/Shanghai
-
-# MyBatis 配置
-mybatis:
+    password: wjl315698
+# 端口配置
+server:
+  address: 0.0.0.0
+  port: 8081
+  servlet:
+    context-path: /api
+    session:
+      cookie:
+        max-age: 259200
+# MyBatis-plus配置
+mybatis-plus:
   configuration:
-    # 开启下划线转驼峰映射，例如 user_account -> userAccount
-    map-underscore-to-camel-case: true
-  # 实体所在包，便于使用别名（可选）
-  type-aliases-package: com.jinlin.kuaimianshibackend.model.entity
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.commons.JakartaCommonsLoggingImpl
+  global-config:
+    db-config:
+      logic-delete-field: isDelete   #全局逻辑删除的实体字段名
+      logic-delete-value: 1 #逻辑以删除（默认为1）
+      logic-not-delete-value: 0 # 逻辑未删除（默认为0）
+# 热key探测
+

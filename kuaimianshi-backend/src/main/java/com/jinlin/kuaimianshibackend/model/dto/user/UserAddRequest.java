@@ -1,11 +1,11 @@
-package com.jinlin.kuaimianshibackend.model.dto;
+package com.jinlin.kuaimianshibackend.model.dto.user;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
- * 用户新增请求
+ * 管理员新增用户请求。
  */
 @Data
 public class UserAddRequest implements Serializable {
@@ -14,11 +14,6 @@ public class UserAddRequest implements Serializable {
      * 用户账号
      */
     private String userAccount;
-
-    /**
-     * 用户密码
-     */
-    private String userPassword;
 
     /**
      * 用户昵称
@@ -31,12 +26,7 @@ public class UserAddRequest implements Serializable {
     private String userAvatar;
 
     /**
-     * 用户简介
-     */
-    private String userProfile;
-
-    /**
-     * 用户角色：user / admin / ban
+     * 用户角色
      */
     private String userRole;
 

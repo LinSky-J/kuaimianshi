@@ -5,10 +5,9 @@ import com.jinlin.kuaimianshibackend.model.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * 用户 Mapper
+ * 用户 Mapper。
  *
- * 使用 MyBatis-Plus 的通用 BaseMapper，
- * 不需要写任何自定义方法即可完成基础 CRUD。
+ * <p>用户表的基础增删改查全部交由 MyBatis-Plus {@link BaseMapper} 处理。</p>
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {

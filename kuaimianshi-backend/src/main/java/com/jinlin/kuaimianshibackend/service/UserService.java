@@ -1,61 +1,133 @@
 package com.jinlin.kuaimianshibackend.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.jinlin.kuaimianshibackend.model.dto.user.UserQueryRequest;
 import com.jinlin.kuaimianshibackend.model.entity.User;
+import com.jinlin.kuaimianshibackend.model.vo.LoginUserVO;
+import com.jinlin.kuaimianshibackend.model.vo.UserVO;
+import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * 用户服务
+ * 用户服务接口。
  */
-public interface UserService {
-
-    /**
-     * 新增用户（后台管理用）
-     */
-    boolean addUser(User user);
+public interface UserService extends IService<User> {
 
     /**
      * 用户注册
+     *
+     * @param userAccount   用户账户
+     * @param userPassword  用户密码
+     * @param checkPassword 校验密码
+     * @return 新用户 id
      */
-    User register(String userAccount, String userPassword, String checkPassword);
+    long userRegister(String userAccount, String userPassword, String checkPassword);
 
     /**
      * 用户登录
-     */
-    User login(String userAccount, String userPassword);
-
-    /**
-     * 根据 id 删除用户（逻辑删除）
-     */
-    boolean deleteUser(Long id);
-
-    /**
-     * 更新用户
-     */
-    boolean updateUser(User user);
-
-    /**
-     * 根据 id 获取用户
-     */
-    User getUserById(Long id);
-
-    /**
-     * 查询所有用户
-     */
-    List<User> listUsers();
-
-    /**
-     * 按条件分页查询用户
      *
-     * @param userAccount 账号（可选）
-     * @param userName    昵称（可选）
-     * @param current     当前页号，从 1 开始
-     * @param pageSize    每页大小
+     * @param userAccount  用户账户
+     * @param userPassword 用户密码
+     * @param request
+     * @return 脱敏后的用户信息
      */
-    List<User> listUsersByPage(String userAccount, String userName, long current, long pageSize);
+    LoginUserVO userLogin(String userAccount, String userPassword, HttpServletRequest request);
 
     /**
-     * 统计符合条件的用户数量
+     * 用户登录（微信开放平台）
+     *
+     * @param wxOAuth2UserInfo 从微信获取的用户信息
+     * @param request
+     * @return 脱敏后的用户信息
      */
-    long countUsersByCondition(String userAccount, String userName);
+    LoginUserVO userLoginByMpOpen(WxOAuth2UserInfo wxOAuth2UserInfo, HttpServletRequest request);
+
+    /**
+     * 获取当前登录用户
+     *
+     * @param request
+     * @return
+     */
+    User getLoginUser(HttpServletRequest request);
+
+    /**
+     * 获取当前登录用户（允许未登录）
+     *
+     * @param request
+     * @return
+     */
+    User getLoginUserPermitNull(HttpServletRequest request);
+
+    /**
+     * 是否为管理员
+     *
+     * @param request
+     * @return
+     */
+    boolean isAdmin(HttpServletRequest request);
+
+    /**
+     * 是否为管理员
+     *
+     * @param user
+     * @return
+     */
+    boolean isAdmin(User user);
+
+    /**
+     * 用户注销
+     *
+     * @param request
+     * @return
+     */
+    boolean userLogout(HttpServletRequest request);
+
+    /**
+     * 获取脱敏的已登录用户信息
+     *
+     * @return
+     */
+    LoginUserVO getLoginUserVO(User user);
+
+    /**
+     * 获取脱敏的用户信息
+     *
+     * @param user
+     * @return
+     */
+    UserVO getUserVO(User user);
+
+    /**
+     * 获取脱敏的用户信息
+     *
+     * @param userList
+     * @return
+     */
+    List<UserVO> getUserVO(List<User> userList);
+
+    /**
+     * 获取查询条件
+     *
+     * @param userQueryRequest
+     * @return
+     */
+    QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
+
+    /**
+     * 添加用户签到记录
+     * @param userId
+     * @return
+     */
+    boolean addUserSignIn(long userId);
+
+    /**
+     * 获取用户某一年的签到记录
+     * @param userId
+     * @param year
+     * @return
+     */
+    List<Integer> getUserSignInRecord(long userId,Integer year);
 }

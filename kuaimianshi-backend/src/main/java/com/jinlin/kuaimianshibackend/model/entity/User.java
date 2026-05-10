@@ -1,36 +1,41 @@
 package com.jinlin.kuaimianshibackend.model.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 用户实体，对应数据库表 user
+ * 用户实体，对应数据库中的 `user` 表。
  */
 @Data
 @TableName("user")
 public class User implements Serializable {
 
     /**
-     * 主键 id，自增
+     * 用户 id
      */
     @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
-     * 用户账号
+     * 登录账号
      */
     private String userAccount;
 
     /**
-     * 用户密码（建议后续存加密后的密文）
+     * 加密后的密码
      */
     private String userPassword;
 
     /**
-     * 微信开放平台 id
+     * 微信开放平台 unionId
      */
     private String unionId;
 
@@ -55,9 +60,34 @@ public class User implements Serializable {
     private String userProfile;
 
     /**
-     * 用户角色：user / admin / ban
+     * 用户角色：user/admin/ban
      */
     private String userRole;
+
+    /**
+     * 手机号
+     */
+    private String phoneNumber;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 年级
+     */
+    private String grade;
+
+    /**
+     * 工作经验
+     */
+    private String workExperience;
+
+    /**
+     * 擅长方向
+     */
+    private String expertiseDirection;
 
     /**
      * 编辑时间
@@ -67,20 +97,19 @@ public class User implements Serializable {
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     /**
-     * 是否删除（0 否，1 是）—— MyBatis-Plus 逻辑删除字段
+     * 逻辑删除标记
      */
     @TableLogic
     private Integer isDelete;
 
     private static final long serialVersionUID = 1L;
+
 }
